@@ -29,12 +29,12 @@ public class Product {
     @Column(name = "discount", nullable = false)
     private Double discount;
 
-    @OneToMany(mappedBy = "member_product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<MemberProduct> memberProductList;
 
-    @OneToMany(mappedBy = "product_image", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> productImageList;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Cart> cartList;
 }

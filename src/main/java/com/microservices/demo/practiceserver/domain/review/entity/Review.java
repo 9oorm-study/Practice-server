@@ -36,6 +36,6 @@ public class Review {
     @JoinColumn(name = "member_product_id")
     private MemberProduct memberProduct;
 
-    @OneToMany(mappedBy = "review_image", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewImage> reviewImageList;
 }

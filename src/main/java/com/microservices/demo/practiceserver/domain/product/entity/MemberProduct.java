@@ -31,6 +31,6 @@ public class MemberProduct {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "memberProduct", cascade = CascadeType.ALL)
     private List<Review> reviewList;
 }
