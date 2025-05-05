@@ -31,19 +31,22 @@ public class ReviewController {
         ReviewResponseDTO.CreateReviewResponseDTO response = ReviewResponseDTO.CreateReviewResponseDTO.builder()
                 .id(review.getId())
                 .score(review.getScore())
-                .member(toMemberDTO(review.getMember()))
-                .memberProduct(toMemberProductDTO(review.getMemberProduct()))
+                .content(review.getContent())
+                .member(null)
+                .memberProduct(null)
+//                .member(toMemberDTO(review.getMember()))
+//                .memberProduct(toMemberProductDTO(review.getMemberProduct()))
                 .build();
 
         return ResponseEntity.ok(response);
     }
-    public MemberDTO toMemberDTO(Member member){
+    private MemberDTO toMemberDTO(Member member){
         return new MemberDTO(member.getId(), member.getEmail(), member.getNickname(), member.getPassword());
     }
     public MemberProductDTO toMemberProductDTO(MemberProduct memberProduct){
         return new MemberProductDTO(memberProduct.getId(), memberProduct.getId(), memberProduct.getId(), memberProduct.getSize());
     }
-    @GetMapping("/reviewList")
+    @GetMapping("/reviewLists")
     public List<ReviewResponseDTO.ReviewListResponseDTO> getReviewList() {
         List<Review> reviewList = reviewService.getReviewList();
 

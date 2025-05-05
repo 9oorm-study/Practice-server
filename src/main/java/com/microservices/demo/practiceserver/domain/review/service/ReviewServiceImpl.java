@@ -6,19 +6,18 @@ import com.microservices.demo.practiceserver.domain.review.dto.ReviewRequestDTO;
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewResponseDTO;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import com.microservices.demo.practiceserver.domain.review.repository.ReviewRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService{
     @Autowired
     private final ReviewRepository reviewRepository;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
-    }
 
     @Override
     public Review createReview(ReviewRequestDTO.CreateReviewDTO request){
@@ -27,13 +26,13 @@ public class ReviewServiceImpl implements ReviewService{
         Review review = Review.builder()
                 .score(request.getScore())
                 .content(request.getContent())
-                .member(request.getMember())
-                .memberProduct(request.getMemberProduct())
+                .member(null)
+                .memberProduct(null)
                 .build();
 
 
-        reviewRepository.save(review);
-        return null;
+
+        return reviewRepository.save(review);
     }
 
 

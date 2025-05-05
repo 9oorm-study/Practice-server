@@ -9,14 +9,14 @@ public class ReviewRequestDTO {
 
 
 
-    @Data
+
     @Getter
     public static class CreateReviewDTO{
 
         private Double score;
         private String content;
-        private Member member;
-        private MemberProduct memberProduct;
+        private Long memberId;
+        private Long memberProductId;
 
 
 
