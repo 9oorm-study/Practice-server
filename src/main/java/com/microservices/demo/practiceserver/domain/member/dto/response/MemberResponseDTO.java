@@ -9,7 +9,17 @@ public class MemberResponseDTO {
 
     @Getter
     @Builder
-    public static class memberInfoResponse {
+    public static class postMemberInfoResponse {
+        private Long memberId;
+        private String username;
+        private String password;
+        private String email;
+        private String nickname;
+    }
+
+    @Getter
+    @Builder
+    public static class getMmeberInfoResponse {
         private Long memberId;
         private String username;
         private String password;
@@ -28,4 +38,5 @@ public class MemberResponseDTO {
         private String phone;
         private LocalDate birth;
     }
+
 }

@@ -16,10 +16,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/member")
-    public MemberResponseDTO.memberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.postMemberInfoRequest request) {
+    public MemberResponseDTO.postMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.postMemberInfoRequest request) {
         Member member = memberService.postMemberInfo(request);
 
-        return MemberResponseDTO.memberInfoResponse.builder()
+        return MemberResponseDTO.postMemberInfoResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
                 .email(member.getEmail())
@@ -29,10 +29,10 @@ public class MemberController {
     }
 
     @GetMapping("/member")
-    public List<MemberResponseDTO.memberInfoResponse> getAllMembersInfo() {
+    public List<MemberResponseDTO.getMmeberInfoResponse> getAllMembersInfo() {
 
         return memberService.getAllMembersInfo().stream()
-                .map(member -> MemberResponseDTO.memberInfoResponse.builder()
+                .map(member -> MemberResponseDTO.getMmeberInfoResponse.builder()
                         .memberId(member.getId())
                         .username(member.getUsername())
                         .email(member.getEmail())
@@ -43,10 +43,10 @@ public class MemberController {
     }
 
     @GetMapping("/member/{memberId}")
-    public MemberResponseDTO.memberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
+    public MemberResponseDTO.getMmeberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
         Member member = memberService.getMemberInfoById(memberId);
 
-        return MemberResponseDTO.memberInfoResponse.builder()
+        return MemberResponseDTO.getMmeberInfoResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
                 .email(member.getEmail())
