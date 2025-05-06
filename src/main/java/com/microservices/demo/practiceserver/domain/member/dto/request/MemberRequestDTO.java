@@ -10,7 +10,6 @@ import java.time.LocalDate;
 public class MemberRequestDTO {
 
     @Getter
-    @Builder
     public static class postMemberInfoRequest {
         private String username;
         private String password;
@@ -19,7 +18,6 @@ public class MemberRequestDTO {
     }
 
     @Getter
-    @Builder
     public static class updateMemberInfoRequest {
         private String nickname;
         private Integer height;

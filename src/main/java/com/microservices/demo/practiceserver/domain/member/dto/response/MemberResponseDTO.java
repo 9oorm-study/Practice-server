@@ -4,28 +4,35 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class MemberResponseDTO {
 
     @Getter
     @Builder
-    public static class postMemberInfoResponse {
+    public static class createMemberInfoResponse {
         private Long memberId;
         private String username;
-        private String password;
         private String email;
         private String nickname;
     }
 
     @Getter
     @Builder
-    public static class getMmeberInfoResponse {
+    public static class memberInfoResponse {
         private Long memberId;
         private String username;
-        private String password;
         private String email;
         private String nickname;
+        
     }
+
+    @Getter
+    @Builder
+    public static class memberInfoListResponse {
+        private List<memberInfoResponse> members;
+    }
+
 
     @Getter
     @Builder

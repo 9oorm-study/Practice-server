@@ -9,49 +9,51 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/member")
-    public MemberResponseDTO.postMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.postMemberInfoRequest request) {
+    @PostMapping("/members")
+    public MemberResponseDTO.createMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.postMemberInfoRequest request) {
         Member member = memberService.postMemberInfo(request);
 
-        return MemberResponseDTO.postMemberInfoResponse.builder()
+        return MemberResponseDTO.createMemberInfoResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .password(member.getPassword())
                 .build();
     }
 
-    @GetMapping("/member")
-    public List<MemberResponseDTO.getMmeberInfoResponse> getAllMembersInfo() {
+    @GetMapping("/members")
+    public MemberResponseDTO.memberInfoListResponse getAllMembersInfo() {
+        List<Member> memberList = memberService.getAllMembersInfo();
 
-        return memberService.getAllMembersInfo().stream()
-                .map(member -> MemberResponseDTO.getMmeberInfoResponse.builder()
-                        .memberId(member.getId())
-                        .username(member.getUsername())
-                        .email(member.getEmail())
-                        .nickname(member.getNickname())
-                        .password(member.getPassword())
-                        .build())
-                .toList();
+        return MemberResponseDTO.memberInfoListResponse.builder()
+                .members(memberList.stream()
+                        .map(member -> MemberResponseDTO.memberInfoResponse.builder()
+                                .memberId(member.getId())
+                                .username(member.getUsername())
+                                .email(member.getEmail())
+                                .nickname(member.getNickname())
+                                .build())
+                        .toList())
+                .build();
     }
 
-    @GetMapping("/member/{memberId}")
-    public MemberResponseDTO.getMmeberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
+
+    @GetMapping("/members/{memberId}")
+    public MemberResponseDTO.memberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
         Member member = memberService.getMemberInfoById(memberId);
 
-        return MemberResponseDTO.getMmeberInfoResponse.builder()
+        return MemberResponseDTO.memberInfoResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .password(member.getPassword())
                 .build();
     }
 
