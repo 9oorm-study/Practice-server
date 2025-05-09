@@ -14,4 +14,8 @@ public interface ReviewService {
     List<Review> getReviewList();
 
     Review getReview(Long reviewId);
+
+    Review updateReview(Long reviewId, ReviewRequestDTO.UpdateReviewDTO request);
+
+    void deleteReview(Long reviewId);
 }

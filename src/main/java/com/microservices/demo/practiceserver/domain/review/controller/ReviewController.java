@@ -75,5 +75,15 @@ public class ReviewController {
         return response;
     }
 
+    @PatchMapping("/{reviewId}")
+    public ReviewResponseDTO.ReviewUpdateResponseDTO updateReview(@PathVariable("reviewId") Long reviewId,@RequestBody ReviewRequestDTO.UpdateReviewDTO request){
+        Review review = reviewService.updateReview(reviewId,request);
+        return ReviewResponseDTO.ReviewUpdateResponseDTO.toReviewUpdateResponseDTO(review);
+    }
 
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<Void> deleteReview(@PathVariable("reviewId") Long reviewId){
+        reviewService.deleteReview(reviewId);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReviewResponseDTO {
@@ -50,5 +51,20 @@ public class ReviewResponseDTO {
         private final MemberDTO member;
         private final MemberProductDTO memberProduct;
 
+    }
+
+    @Getter
+    @Builder
+    public static class ReviewUpdateResponseDTO{
+        private Long reviewId;
+        private Double score;
+        private String content;
+        public static ReviewUpdateResponseDTO toReviewUpdateResponseDTO(Review review){
+            return ReviewUpdateResponseDTO.builder()
+                    .reviewId(review.getId())
+                    .score(review.getScore())
+                    .content(review.getContent())
+                    .build();
+        }
     }
 }
