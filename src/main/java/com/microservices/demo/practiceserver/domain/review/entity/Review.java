@@ -32,4 +32,9 @@ public class Review {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_product_id", unique = true)
     private MemberProduct memberProduct;
+
+    public void updateReview(Double score,String content){
+        this.score=score;
+        this.content=content;
+    }
 }
