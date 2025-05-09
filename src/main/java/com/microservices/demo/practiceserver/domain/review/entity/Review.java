@@ -26,10 +26,10 @@ public class Review {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_product_id", nullable = false, unique = true)
+    @JoinColumn(name = "member_product_id", unique = true)
     private MemberProduct memberProduct;
 }
