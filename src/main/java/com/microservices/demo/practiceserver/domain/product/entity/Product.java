@@ -3,6 +3,9 @@ package com.microservices.demo.practiceserver.domain.product.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -24,4 +27,7 @@ public class Product {
 
     @Column(name = "discount", nullable = false)
     private Double discount;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> productImageList = new ArrayList<>();
 }
