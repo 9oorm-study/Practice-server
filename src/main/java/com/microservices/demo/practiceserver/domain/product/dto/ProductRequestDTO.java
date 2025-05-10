@@ -3,6 +3,7 @@ package com.microservices.demo.practiceserver.domain.product.dto;
 import com.microservices.demo.practiceserver.domain.product.entity.Product;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRequestDTO {
@@ -19,6 +20,7 @@ public class ProductRequestDTO {
                     .name(this.name)
                     .price(this.price)
                     .discount(this.discount)
+                    .productImageList(new ArrayList<>()) // 변경 부분
                     .build();
         }
 
