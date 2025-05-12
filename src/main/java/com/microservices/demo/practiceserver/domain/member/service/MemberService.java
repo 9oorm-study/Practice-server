@@ -13,4 +13,7 @@ public interface MemberService {
 
     Member getMemberInfoById(Long memberId);
 
+    Member updateMemberInfo(MemberRequestDTO.updateMemberInfoRequest request);
+
+    void deleteMember(Long memberId);
 }

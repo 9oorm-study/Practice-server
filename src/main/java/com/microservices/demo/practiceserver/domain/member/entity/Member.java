@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -48,6 +49,21 @@ public class Member {
     @Column(name = "birth")
     private LocalDate birth;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
+
+    public void updateInfo(String nickname, Integer height, Integer weight, String introduce, String phone, LocalDate birth) {
+        this.nickname = nickname;
+        this.height = height;
+        this.introduce = introduce;
+        this.phone = phone;
+        this.birth = birth;
+    }
+
+    public void softDelete() {
+        this.deletedAt = LocalDateTime.now() ;
+    }
 }

@@ -7,7 +7,9 @@ import com.microservices.demo.practiceserver.domain.member.repository.MemberRepo
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,4 +41,32 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("해당 id의 회원을 찾을 수 없습니다"));
     }
+
+    @Override
+    @Transactional
+    public Member updateMemberInfo(MemberRequestDTO.updateMemberInfoRequest request) {
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(() -> new RuntimeException("해당 id의 회원을 찾을 수 없습니다"));
+
+        member.updateInfo(
+                request.getNickname(),
+                request.getHeight(),
+                request.getWeight(),
+                request.getIntroduce(),
+                request.getPhone(),
+                request.getBirth()
+        );
+
+        return member;
+    }
+
+    // softdDelete
+    @Override
+    public void deleteMember(Long memberId) {
+        Member deletedMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("해당 id의 회원을 찾을 수 없습니다"));
+
+        deletedMember.softDelete();
+    }
+
 }

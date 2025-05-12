@@ -37,7 +37,6 @@ public class MemberResponseDTO {
     @Getter
     @Builder
     public static class updateMemberInfoResponse {
-        private Long memberId;
         private String nickname;
         private Integer height;
         private Integer weight;
