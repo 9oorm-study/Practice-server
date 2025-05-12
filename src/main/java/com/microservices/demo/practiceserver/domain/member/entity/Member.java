@@ -1,5 +1,6 @@
 package com.microservices.demo.practiceserver.domain.member.entity;
 
+import ch.qos.logback.core.status.Status;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
@@ -49,6 +50,9 @@ public class Member {
     @Column(name = "birth")
     private LocalDate birth;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
@@ -64,6 +68,7 @@ public class Member {
     }
 
     public void softDelete() {
-        this.deletedAt = LocalDateTime.now() ;
+        this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
     }
 }

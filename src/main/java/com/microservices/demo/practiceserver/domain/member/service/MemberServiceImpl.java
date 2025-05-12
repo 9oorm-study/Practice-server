@@ -60,13 +60,13 @@ public class MemberServiceImpl implements MemberService {
         return member;
     }
 
-    // softdDelete
+
     @Override
     public void deleteMember(Long memberId) {
-        Member deletedMember = memberRepository.findById(memberId)
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("해당 id의 회원을 찾을 수 없습니다"));
 
-        deletedMember.softDelete();
+        member.softDelete();
     }
 
 }
