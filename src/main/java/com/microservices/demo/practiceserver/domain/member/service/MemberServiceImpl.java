@@ -32,7 +32,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> getAllMembersInfo() {
+    public List<Member> getAllMembersInfo(Integer currentPage, Integer size) {
+
         return memberRepository.findAll();
     }
 
