@@ -9,8 +9,11 @@ public interface MemberService {
 
     Member postMemberInfo(MemberRequestDTO.postMemberInfoRequest request);
 
-    List<Member> getAllMembersInfo();
+    List<Member> getAllMembersInfo(Integer currentPage, Integer size);
 
     Member getMemberInfoById(Long memberId);
 
+    Member updateMemberInfo(MemberRequestDTO.updateMemberInfoRequest request);
+
+    void deleteMember(Long memberId);
 }

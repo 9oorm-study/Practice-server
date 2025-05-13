@@ -19,6 +19,7 @@ public class MemberRequestDTO {
 
     @Getter
     public static class updateMemberInfoRequest {
+        private Long memberId;
         private String nickname;
         private Integer height;
         private Integer weight;
