@@ -6,6 +6,7 @@ import com.microservices.demo.practiceserver.domain.review.dto.ReviewRequestDTO;
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewResponseDTO;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import com.microservices.demo.practiceserver.domain.review.repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,25 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public Review getReview(Long reviewId){
-        return reviewRepository.findById(reviewId)
-                .orElseThrow(()->new RuntimeException("리뷰를 찾지 못했습니다"));
+        return findReview(reviewId);
     }
+
+
+    @Override
+    @Transactional
+    public Review updateReview(Long reviewId, ReviewRequestDTO.UpdateReviewDTO request){
+        Review review= findReview(reviewId);
+        review.updateReview(request.getScore(),request.getContent());
+        return review;
+    }
+
+    @Override
+    public void deleteReview(Long reviewId){
+        reviewRepository.deleteById(reviewId);
+    }
+
+    private Review findReview(Long reviewId){
+        return reviewRepository.findById(reviewId).orElseThrow(()->new RuntimeException("리뷰를 찾지 못했습니다"));
+    }
+
 }

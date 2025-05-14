@@ -28,4 +28,10 @@ public class ReviewRequestDTO {
         private Member member;
         private MemberProduct memberProduct;
     }
+
+    @Getter
+    public static class UpdateReviewDTO{
+        private Double score;
+        private String content;
+    }
 }
