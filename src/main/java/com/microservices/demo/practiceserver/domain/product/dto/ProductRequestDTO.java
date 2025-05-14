@@ -23,4 +23,10 @@ public class ProductRequestDTO {
         }
 
     }
+
+    @Getter
+    public static class UpdateProductDTO {
+        private Integer price;
+        private Double discount;
+    }
 }

@@ -4,12 +4,15 @@ import com.microservices.demo.practiceserver.domain.product.dto.ProductRequestDT
 import com.microservices.demo.practiceserver.domain.product.entity.Product;
 import com.microservices.demo.practiceserver.domain.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -23,19 +26,44 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    @Transactional(readOnly = true)
+    public Page<Product> getProducts(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<Product> products = productRepository.findAllByDeletedAtIsNull(pageable);
+        return products;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Product getProduct(Long productId) {
+        return findProduct(productId);
+    }
+
+    @Override
+    public Product updateProduct(Long productId, ProductRequestDTO.UpdateProductDTO request) {
+        Product product = findProduct(productId);
+        product.updateProduct(request.getPrice(), request.getDiscount());
+        return product;
+    }
+
+    @Override
+    public Product deleteProducts(Long productId) {
+        Product product = findProduct(productId);
+        product.softDelete();
+        return product;
+    }
+
+    private void createProductImage(ProductRequestDTO.CreateProductDTO request, Product product) {
+        if (request.getKeyName() != null) {
+            for (String keyName : request.getKeyName()) {
+                productImageService.createProductImage(product, keyName);
+            }
+        }
+    }
+
+    private Product findProduct(Long productId) {
         return productRepository.findById(productId).orElseThrow(() ->
                 new RuntimeException("상품을 찾지 못했습니다."));
     }
 
-    private void createProductImage(ProductRequestDTO.CreateProductDTO request, Product product) {
-        for (String keyName : request.getKeyName()) {
-            productImageService.createProductImage(product, keyName);
-        }
-    }
 }

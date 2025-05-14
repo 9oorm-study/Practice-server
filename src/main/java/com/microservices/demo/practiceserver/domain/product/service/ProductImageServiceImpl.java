@@ -5,9 +5,11 @@ import com.microservices.demo.practiceserver.domain.product.entity.ProductImage;
 import com.microservices.demo.practiceserver.domain.product.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductImageServiceImpl implements ProductImageService {
 
     private final ProductImageRepository productImageRepository;
