@@ -26,12 +26,12 @@ public class MemberProductController {
     }
 
     @GetMapping("/member-product/{productId}")
-    public MemberResponseDTO.memberInfoListResponse getMembersByProductId(@PathVariable Long productId) {
+    public MemberResponseDTO.MemberInfoListResponse getMembersByProductId(@PathVariable Long productId) {
         List<Member> members = memberProductService.getMembersByProductId(productId);
 
-        return MemberResponseDTO.memberInfoListResponse.builder()
+        return MemberResponseDTO.MemberInfoListResponse.builder()
                 .members(members.stream()
-                        .map(member -> MemberResponseDTO.memberInfoResponse.builder()
+                        .map(member -> MemberResponseDTO.MemberInfoResponse.builder()
                                 .memberId(member.getId())
                                 .username(member.getUsername())
                                 .email(member.getEmail())
