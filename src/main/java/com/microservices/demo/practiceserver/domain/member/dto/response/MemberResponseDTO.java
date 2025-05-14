@@ -10,7 +10,7 @@ public class MemberResponseDTO {
 
     @Getter
     @Builder
-    public static class createMemberInfoResponse {
+    public static class CreateMemberInfoResponse {
         private Long memberId;
         private String username;
         private String email;
@@ -19,7 +19,7 @@ public class MemberResponseDTO {
 
     @Getter
     @Builder
-    public static class memberInfoResponse {
+    public static class MemberInfoResponse {
         private Long memberId;
         private String username;
         private String email;
@@ -29,15 +29,15 @@ public class MemberResponseDTO {
 
     @Getter
     @Builder
-    public static class memberInfoListResponse {
+    public static class MemberInfoListResponse {
         private Integer currentPageNum;
         private Integer totalPageNum;
-        private List<memberInfoResponse> members;
+        private List<MemberInfoResponse> members;
     }
 
     @Getter
     @Builder
-    public static class updateMemberInfoResponse {
+    public static class UpdateMemberInfoResponse {
         private String nickname;
         private Integer height;
         private Integer weight;

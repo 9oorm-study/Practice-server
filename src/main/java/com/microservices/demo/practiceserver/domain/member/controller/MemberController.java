@@ -16,10 +16,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/members")
-    public MemberResponseDTO.createMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.postMemberInfoRequest request) {
+    public MemberResponseDTO.CreateMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.PostMemberInfoRequest request) {
         Member member = memberService.postMemberInfo(request);
 
-        return MemberResponseDTO.createMemberInfoResponse.builder()
+        return MemberResponseDTO.CreateMemberInfoResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
                 .email(member.getEmail())
@@ -29,12 +29,12 @@ public class MemberController {
 
     // 페이지네이션
     @GetMapping("/members")
-    public MemberResponseDTO.memberInfoListResponse getAllMembersInfo(@PathVariable Integer currentPage, Integer size) {
+    public MemberResponseDTO.MemberInfoListResponse getAllMembersInfo(@PathVariable Integer currentPage, Integer size) {
         List<Member> memberList = memberService.getAllMembersInfo(currentPage, size);
 
-        return MemberResponseDTO.memberInfoListResponse.builder()
+        return MemberResponseDTO.MemberInfoListResponse.builder()
                 .members(memberList.stream()
-                        .map(member -> MemberResponseDTO.memberInfoResponse.builder()
+                        .map(member -> MemberResponseDTO.MemberInfoResponse.builder()
                                 .memberId(member.getId())
                                 .username(member.getUsername())
                                 .email(member.getEmail())
@@ -46,10 +46,10 @@ public class MemberController {
 
 
     @GetMapping("/members/{memberId}")
-    public MemberResponseDTO.memberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
+    public MemberResponseDTO.MemberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
         Member member = memberService.getMemberInfoById(memberId);
 
-        return MemberResponseDTO.memberInfoResponse.builder()
+        return MemberResponseDTO.MemberInfoResponse.builder()
                 .memberId(member.getId())
                 .username(member.getUsername())
                 .email(member.getEmail())
@@ -58,10 +58,10 @@ public class MemberController {
     }
 
     @PatchMapping("/members")
-    public MemberResponseDTO.updateMemberInfoResponse updateMemberInfoResponse(@RequestBody MemberRequestDTO.updateMemberInfoRequest request) {
+    public MemberResponseDTO.UpdateMemberInfoResponse updateMemberInfoResponse(@RequestBody MemberRequestDTO.UpdateMemberInfoRequest request) {
         Member member = memberService.updateMemberInfo(request);
 
-        return MemberResponseDTO.updateMemberInfoResponse.builder()
+        return MemberResponseDTO.UpdateMemberInfoResponse.builder()
                 .nickname(member.getNickname())
                 .height(member.getHeight())
                 .weight(member.getWeight())
