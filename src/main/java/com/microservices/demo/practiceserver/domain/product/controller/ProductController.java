@@ -35,14 +35,4 @@ public class ProductController {
         List<Product> products = productService.getProducts();
         return ProductResponseDTO.ProductListResponseDTO.toProductListResponseDTO(products);
     }
-
-    @RestController
-    @RequiredArgsConstructor
-    public static class MemberProductController {
-
-        private final MemberService memberService;
-
-        @GetMapping("/member-prdoucts/{memberId")
-        public
-    }
 }
