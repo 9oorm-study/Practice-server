@@ -18,14 +18,14 @@ public class MemberProductController {
 
     private final MemberProductService memberProductService;
 
-    @GetMapping("/member-product/{memberId}")
+    @GetMapping("/member-product/members/{memberId}")
     public ProductResponseDTO.ProductListResponseDTO getProductsByMemberId(@PathVariable Long memberId) {
         List<Product> products = memberProductService.getProductsByMemberId(memberId);
 
         return ProductResponseDTO.ProductListResponseDTO.toProductListResponseDTO(products);
     }
 
-    @GetMapping("/member-product/{productId}")
+    @GetMapping("/member-product/products/{productId}")
     public MemberResponseDTO.MemberInfoListResponse getMembersByProductId(@PathVariable Long productId) {
         List<Member> members = memberProductService.getMembersByProductId(productId);
 

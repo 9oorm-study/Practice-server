@@ -71,7 +71,7 @@ public class MemberController {
                 .build();
     }
 
-    @DeleteMapping("/members/{memberId")
+    @DeleteMapping("/members/{memberId}")
     public void deleteMember(@PathVariable Long memberId) {
         memberService.deleteMember(memberId);
     }
