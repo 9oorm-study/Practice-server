@@ -30,14 +30,14 @@ public class MemberResponseDTO {
     @Getter
     @Builder
     public static class memberInfoListResponse {
+        private Integer currentPageNum;
+        private Integer totalPageNum;
         private List<memberInfoResponse> members;
     }
-
 
     @Getter
     @Builder
     public static class updateMemberInfoResponse {
-        private Long memberId;
         private String nickname;
         private Integer height;
         private Integer weight;
