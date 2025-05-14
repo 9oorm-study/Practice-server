@@ -1,5 +1,6 @@
 package com.microservices.demo.practiceserver.domain.product.controller;
 
+import com.microservices.demo.practiceserver.domain.member.service.MemberService;
 import com.microservices.demo.practiceserver.domain.product.dto.ProductRequestDTO;
 import com.microservices.demo.practiceserver.domain.product.dto.ProductResponseDTO;
 import com.microservices.demo.practiceserver.domain.product.entity.Product;
@@ -33,5 +34,15 @@ public class ProductController {
     public ProductResponseDTO.ProductListResponseDTO getProducts() {
         List<Product> products = productService.getProducts();
         return ProductResponseDTO.ProductListResponseDTO.toProductListResponseDTO(products);
+    }
+
+    @RestController
+    @RequiredArgsConstructor
+    public static class MemberProductController {
+
+        private final MemberService memberService;
+
+        @GetMapping("/member-prdoucts/{memberId")
+        public
     }
 }
