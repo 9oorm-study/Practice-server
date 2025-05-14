@@ -1,5 +1,6 @@
 package com.microservices.demo.practiceserver.domain.product.controller;
 
+import com.microservices.demo.practiceserver.domain.member.service.MemberService;
 import com.microservices.demo.practiceserver.domain.product.dto.ProductRequestDTO;
 import com.microservices.demo.practiceserver.domain.product.dto.ProductResponseDTO;
 import com.microservices.demo.practiceserver.domain.product.entity.Product;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

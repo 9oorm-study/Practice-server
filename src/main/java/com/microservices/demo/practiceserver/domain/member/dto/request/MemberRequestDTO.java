@@ -1,8 +1,5 @@
 package com.microservices.demo.practiceserver.domain.member.dto.request;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -10,7 +7,7 @@ import java.time.LocalDate;
 public class MemberRequestDTO {
 
     @Getter
-    public static class postMemberInfoRequest {
+    public static class PostMemberInfoRequest {
         private String username;
         private String password;
         private String email;
@@ -18,7 +15,7 @@ public class MemberRequestDTO {
     }
 
     @Getter
-    public static class updateMemberInfoRequest {
+    public static class UpdateMemberInfoRequest {
         private Long memberId;
         private String nickname;
         private Integer height;

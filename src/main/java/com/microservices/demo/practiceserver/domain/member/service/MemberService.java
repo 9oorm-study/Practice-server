@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface MemberService {
 
-    Member postMemberInfo(MemberRequestDTO.postMemberInfoRequest request);
+    Member postMemberInfo(MemberRequestDTO.PostMemberInfoRequest request);
 
     List<Member> getAllMembersInfo(Integer currentPage, Integer size);
 
     Member getMemberInfoById(Long memberId);
 
-    Member updateMemberInfo(MemberRequestDTO.updateMemberInfoRequest request);
+    Member updateMemberInfo(MemberRequestDTO.UpdateMemberInfoRequest request);
 
     void deleteMember(Long memberId);
 }

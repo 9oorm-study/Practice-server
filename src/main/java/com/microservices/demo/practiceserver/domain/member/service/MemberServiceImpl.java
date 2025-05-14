@@ -1,17 +1,13 @@
 package com.microservices.demo.practiceserver.domain.member.service;
 
 import com.microservices.demo.practiceserver.domain.member.dto.request.MemberRequestDTO;
-import com.microservices.demo.practiceserver.domain.member.dto.response.MemberResponseDTO;
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
 import com.microservices.demo.practiceserver.domain.member.repository.MemberRepository;
-import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member postMemberInfo(MemberRequestDTO.postMemberInfoRequest request) {
+    public Member postMemberInfo(MemberRequestDTO.PostMemberInfoRequest request) {
         Member member = Member.builder()
                 .username(request.getUsername())
                 .password(request.getPassword())
@@ -45,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public Member updateMemberInfo(MemberRequestDTO.updateMemberInfoRequest request) {
+    public Member updateMemberInfo(MemberRequestDTO.UpdateMemberInfoRequest request) {
         Member member = memberRepository.findById(request.getMemberId())
                 .orElseThrow(() -> new RuntimeException("해당 id의 회원을 찾을 수 없습니다"));
 
