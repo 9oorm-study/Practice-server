@@ -1,6 +1,8 @@
 package com.microservices.demo.practiceserver.domain.review.dto;
 
+import com.microservices.demo.practiceserver.domain.member.dto.response.MemberResponseDTO;
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
+import com.microservices.demo.practiceserver.domain.product.dto.ProductResponseDTO;
 import com.microservices.demo.practiceserver.domain.product.entity.mapping.MemberProduct;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import lombok.AllArgsConstructor;
@@ -23,8 +25,8 @@ public class ReviewResponseDTO {
         private final Long id;
         private final Double score;
         private final String content;
-        private final MemberDTO member;
-        private final MemberProductDTO memberProduct;
+        private final MemberResponseDTO.MemberInfoResponse member;
+        private final ProductResponseDTO.ProductDetailResponseDTO memberProduct;
     }
 
 
@@ -37,8 +39,8 @@ public class ReviewResponseDTO {
         private final Long id;
         private final Double score;
         private final String content;
-        private final MemberDTO member;
-        private final MemberProductDTO memberProduct;
+        private final MemberResponseDTO.MemberInfoResponse member;
+        private final ProductResponseDTO.ProductDetailResponseDTO memberProduct;
     }
 
     @Builder
@@ -48,8 +50,8 @@ public class ReviewResponseDTO {
         private final Long id;
         private final Double score;
         private final String content;
-        private final MemberDTO member;
-        private final MemberProductDTO memberProduct;
+        private final MemberResponseDTO.MemberInfoResponse member;
+        private final ProductResponseDTO.ProductDetailResponseDTO memberProduct;
 
     }
 
