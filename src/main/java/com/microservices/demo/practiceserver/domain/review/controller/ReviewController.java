@@ -2,9 +2,9 @@ package com.microservices.demo.practiceserver.domain.review.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
+import com.microservices.demo.practiceserver.domain.product.dto.ProductResponseDTO;
+import com.microservices.demo.practiceserver.domain.product.entity.Product;
 import com.microservices.demo.practiceserver.domain.product.entity.mapping.MemberProduct;
-import com.microservices.demo.practiceserver.domain.review.dto.MemberDTO;
-import com.microservices.demo.practiceserver.domain.review.dto.MemberProductDTO;
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewRequestDTO;
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewResponseDTO;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.microservices.demo.practiceserver.domain.member.dto.response.MemberResponseDTO.MemberInfoResponse;
 
 
 @RestController
@@ -32,19 +33,23 @@ public class ReviewController {
                 .id(review.getId())
                 .score(review.getScore())
                 .content(review.getContent())
-                .member(null)
-                .memberProduct(null)
-//                .member(toMemberDTO(review.getMember()))
-//                .memberProduct(toMemberProductDTO(review.getMemberProduct()))
+                .member(toMemberInfoResponse(review.getMember()))
+                .memberProduct(toProductDetailResponseDTO(review.getMemberProduct().getProduct()))
+
                 .build();
 
         return ResponseEntity.ok(response);
     }
-    private MemberDTO toMemberDTO(Member member){
-        return new MemberDTO(member.getId(), member.getEmail(), member.getNickname(), member.getPassword());
+    private MemberInfoResponse toMemberInfoResponse(Member member){
+        return MemberInfoResponse.builder()
+                .memberId(member.getId())
+                .username(member.getUsername())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .build();
     }
-    public MemberProductDTO toMemberProductDTO(MemberProduct memberProduct){
-        return new MemberProductDTO(memberProduct.getId(), memberProduct.getId(), memberProduct.getId(), memberProduct.getSize());
+    private ProductResponseDTO.ProductDetailResponseDTO toProductDetailResponseDTO(Product product){
+        return ProductResponseDTO.ProductDetailResponseDTO.toProductDetailResponseDTO(product);
     }
     @GetMapping("/reviewLists")
     public List<ReviewResponseDTO.ReviewListResponseDTO> getReviewList() {
@@ -54,8 +59,8 @@ public class ReviewController {
                 .map(review -> new ReviewResponseDTO.ReviewListResponseDTO(review.getId(),
                         review.getScore(),
                         review.getContent(),
-                        toMemberDTO(review.getMember()),
-                        toMemberProductDTO(review.getMemberProduct())
+                        toMemberInfoResponse(review.getMember()),
+                        toProductDetailResponseDTO(review.getMemberProduct().getProduct())
                         )).collect(Collectors.toList());
 
         return dtos;
@@ -68,8 +73,8 @@ public class ReviewController {
         ReviewResponseDTO.ReviewDetailResponseDTO response = ReviewResponseDTO.ReviewDetailResponseDTO.builder()
                 .id(review.getId())
                 .score(review.getScore())
-                .member(toMemberDTO(review.getMember()))
-                .memberProduct(toMemberProductDTO(review.getMemberProduct()))
+                .member(toMemberInfoResponse(review.getMember()))
+                .memberProduct(toProductDetailResponseDTO(review.getMemberProduct().getProduct()))
                 .build();
 
         return response;

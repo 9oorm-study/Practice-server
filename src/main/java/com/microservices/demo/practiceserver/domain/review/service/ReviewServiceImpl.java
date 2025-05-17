@@ -1,9 +1,10 @@
 package com.microservices.demo.practiceserver.domain.review.service;
 
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
-import com.microservices.demo.practiceserver.domain.review.dto.MemberDTO;
+import com.microservices.demo.practiceserver.domain.member.repository.MemberRepository;
+import com.microservices.demo.practiceserver.domain.product.entity.mapping.MemberProduct;
+import com.microservices.demo.practiceserver.domain.product.repository.MemberProductRepository;
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewRequestDTO;
-import com.microservices.demo.practiceserver.domain.review.dto.ReviewResponseDTO;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import com.microservices.demo.practiceserver.domain.review.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
@@ -19,16 +20,21 @@ public class ReviewServiceImpl implements ReviewService{
     @Autowired
     private final ReviewRepository reviewRepository;
 
+    private final MemberRepository memberRepository;
+    private final MemberProductRepository memberProductRepository;
 
     @Override
     public Review createReview(ReviewRequestDTO.CreateReviewDTO request){
-
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(()->new IllegalArgumentException("존재 하지 않는 회원입니다"));
+        MemberProduct memberProduct = memberProductRepository.findById(request.getMemberProductId())
+                .orElseThrow(()->new IllegalArgumentException("존재 하지 않는 멤버-상품입니다"));
 
         Review review = Review.builder()
                 .score(request.getScore())
                 .content(request.getContent())
-                .member(null)
-                .memberProduct(null)
+                .member(member)
+                .memberProduct(memberProduct)
                 .build();
 
 
