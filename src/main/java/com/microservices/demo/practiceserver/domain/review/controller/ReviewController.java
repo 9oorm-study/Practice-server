@@ -11,6 +11,7 @@ import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import com.microservices.demo.practiceserver.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,19 +52,30 @@ public class ReviewController {
     private ProductResponseDTO.ProductDetailResponseDTO toProductDetailResponseDTO(Product product){
         return ProductResponseDTO.ProductDetailResponseDTO.toProductDetailResponseDTO(product);
     }
-    @GetMapping("/reviewLists")
-    public List<ReviewResponseDTO.ReviewListResponseDTO> getReviewList() {
-        List<Review> reviewList = reviewService.getReviewList();
+    @GetMapping("/reviews")
+    public ResponseEntity<ReviewResponseDTO.ReviewListResponseDTO>getReviews(
+            @RequestParam(value = "cursor",required = false,defaultValue = "0")Long cursor,
+            @RequestParam(value = "size",required = false,defaultValue = "10")Integer size
+    ){
+        Slice<Review> reviews = reviewService.getReviews(cursor,size);
+        List<Review>reviewList=reviews.getContent();
 
-        List<ReviewResponseDTO.ReviewListResponseDTO> dtos = reviewList.stream()
-                .map(review -> new ReviewResponseDTO.ReviewListResponseDTO(review.getId(),
+        List<ReviewResponseDTO.ReviewDetailResponseDTO>items=reviewList.stream()
+                .map(review -> new ReviewResponseDTO.ReviewDetailResponseDTO(
+                        review.getId(),
                         review.getScore(),
                         review.getContent(),
                         toMemberInfoResponse(review.getMember()),
                         toProductDetailResponseDTO(review.getMemberProduct().getProduct())
-                        )).collect(Collectors.toList());
+                ))
+                .collect(Collectors.toList());
 
-        return dtos;
+        ReviewResponseDTO.ReviewListResponseDTO response= ReviewResponseDTO.ReviewListResponseDTO.builder()
+                .items(items)
+                .cursor(reviews.hasNext()?reviewList.get(reviewList.size()-1).getId():null)
+                .hasNext(reviews.hasNext())
+                .build();
+        return ResponseEntity.ok(response);
     }
 
     @JsonIgnoreProperties

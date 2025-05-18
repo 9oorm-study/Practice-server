@@ -36,11 +36,10 @@ public class ReviewResponseDTO {
     @AllArgsConstructor
     @Getter
     public static class ReviewListResponseDTO{
-        private final Long id;
-        private final Double score;
-        private final String content;
-        private final MemberResponseDTO.MemberInfoResponse member;
-        private final ProductResponseDTO.ProductDetailResponseDTO memberProduct;
+
+        private List<ReviewDetailResponseDTO>items;
+        private Long cursor;
+        private boolean hasNext;
     }
 
     @Builder
