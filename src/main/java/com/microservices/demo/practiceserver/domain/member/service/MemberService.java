@@ -2,6 +2,7 @@ package com.microservices.demo.practiceserver.domain.member.service;
 
 import com.microservices.demo.practiceserver.domain.member.dto.request.MemberRequestDTO;
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface MemberService {
 
     Member postMemberInfo(MemberRequestDTO.PostMemberInfoRequest request);
 
-    List<Member> getAllMembersInfo(Integer currentPage, Integer size);
+    Slice<Member> getAllMembersInfo(Long cursor, Integer size);
 
     Member getMemberInfoById(Long memberId);
 

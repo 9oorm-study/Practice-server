@@ -5,6 +5,7 @@ import com.microservices.demo.practiceserver.domain.member.dto.response.MemberRe
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
 import com.microservices.demo.practiceserver.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,29 +20,16 @@ public class MemberController {
     public MemberResponseDTO.CreateMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.PostMemberInfoRequest request) {
         Member member = memberService.postMemberInfo(request);
 
-        return MemberResponseDTO.CreateMemberInfoResponse.builder()
-                .memberId(member.getId())
-                .username(member.getUsername())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .build();
+        return MemberResponseDTO.CreateMemberInfoResponse.toCreateMemberInfoResponse(member);
     }
 
-    // 페이지네이션
-    @GetMapping("/members")
-    public MemberResponseDTO.MemberInfoListResponse getAllMembersInfo(@PathVariable Integer currentPage, Integer size) {
-        List<Member> memberList = memberService.getAllMembersInfo(currentPage, size);
 
-        return MemberResponseDTO.MemberInfoListResponse.builder()
-                .members(memberList.stream()
-                        .map(member -> MemberResponseDTO.MemberInfoResponse.builder()
-                                .memberId(member.getId())
-                                .username(member.getUsername())
-                                .email(member.getEmail())
-                                .nickname(member.getNickname())
-                                .build())
-                        .toList())
-                .build();
+    @GetMapping("/members")
+    public MemberResponseDTO.MemberInfoListResponse getAllMembersInfo(@RequestParam Long cursor,
+                                                                      @RequestParam Integer size) {
+        Slice<Member> memberSlice = memberService.getAllMembersInfo(cursor, size);
+
+        return MemberResponseDTO.MemberInfoListResponse.toMemberInfoListResponse(memberSlice);
     }
 
 
@@ -49,26 +37,14 @@ public class MemberController {
     public MemberResponseDTO.MemberInfoResponse getMemberInfoById(@PathVariable Long memberId) {
         Member member = memberService.getMemberInfoById(memberId);
 
-        return MemberResponseDTO.MemberInfoResponse.builder()
-                .memberId(member.getId())
-                .username(member.getUsername())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .build();
+        return MemberResponseDTO.MemberInfoResponse.toMemberInfoResponse(member);
     }
 
     @PatchMapping("/members")
     public MemberResponseDTO.UpdateMemberInfoResponse updateMemberInfoResponse(@RequestBody MemberRequestDTO.UpdateMemberInfoRequest request) {
         Member member = memberService.updateMemberInfo(request);
 
-        return MemberResponseDTO.UpdateMemberInfoResponse.builder()
-                .nickname(member.getNickname())
-                .height(member.getHeight())
-                .weight(member.getWeight())
-                .introduce(member.getIntroduce())
-                .phone(member.getPhone())
-                .birth(member.getBirth())
-                .build();
+        return MemberResponseDTO.UpdateMemberInfoResponse.toUpdateMemberInfoResponse(member);
     }
 
     @DeleteMapping("/members/{memberId}")
