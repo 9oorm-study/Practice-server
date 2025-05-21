@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +28,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> getProducts(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Product> products = productRepository.findAllByDeletedAtIsNull(pageable);
+    public Slice<Product> getProducts(Long cursor, Integer size) {
+        Pageable pageable = PageRequest.of(0, size);
+        Slice<Product> products;
+        if (cursor.equals(0L)) {
+            products = productRepository.findAllByOrderByPriceAsc(pageable);
+        }
+        else {
+            products = productRepository.findAllByPrice(cursor, pageable);
+        }
         return products;
     }
 

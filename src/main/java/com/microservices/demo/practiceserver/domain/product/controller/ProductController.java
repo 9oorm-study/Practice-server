@@ -7,6 +7,7 @@ import com.microservices.demo.practiceserver.domain.product.entity.Product;
 import com.microservices.demo.practiceserver.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +34,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ProductResponseDTO.ProductListResponseDTO getProducts(@RequestParam Integer page,
-                                                                 @RequestParam Integer size) {
-        Page<Product> products = productService.getProducts(page, size);
+    public ProductResponseDTO.ProductListResponseDTO getProducts(@RequestParam(defaultValue = "0") Long cursor,
+                                                                 @RequestParam(defaultValue = "10") Integer size) {
+        Slice<Product> products = productService.getProducts(cursor, size);
         return ProductResponseDTO.ProductListResponseDTO.toProductListResponseDTO(products);
     }
 
