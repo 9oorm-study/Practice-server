@@ -4,7 +4,7 @@ import com.microservices.demo.practiceserver.domain.product.entity.Product;
 import com.microservices.demo.practiceserver.domain.product.entity.ProductImage;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,14 +55,24 @@ public class ProductResponseDTO {
     @Builder
     public static class ProductListResponseDTO {
         private List<ProductItemResponseDTO> items;
-        private Integer page;
-        private Integer totalPage;
+        private Long cursor;
+        private boolean hasNext;
 
-        public static ProductListResponseDTO toProductListResponseDTO(Page<Product> products) {
+        // 임시
+        public static ProductListResponseDTO toProductListResponseDTO(List<Product> products) {
             return ProductListResponseDTO.builder()
-                    .items(products.getContent().stream().map(ProductItemResponseDTO::toProductItemResponseDTO).toList())
-                    .page(products.getNumber() + 1)
-                    .totalPage(products.getTotalPages())
+                    .items(products.stream().map(ProductItemResponseDTO::toProductItemResponseDTO).toList())
+                    .cursor(null)
+                    .hasNext(false)
+                    .build();
+        }
+
+        public static ProductListResponseDTO toProductListResponseDTO(Slice<Product> products) {
+            List<Product> productList = products.getContent();
+            return ProductListResponseDTO.builder()
+                    .items(productList.stream().map(ProductItemResponseDTO::toProductItemResponseDTO).toList())
+                    .cursor(products.hasNext() ? productList.get(productList.size() - 1).getId() : null)
+                    .hasNext(products.hasNext())
                     .build();
         }
     }
