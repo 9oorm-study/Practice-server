@@ -4,6 +4,10 @@ import com.microservices.demo.practiceserver.domain.member.dto.request.MemberReq
 import com.microservices.demo.practiceserver.domain.member.entity.Member;
 import com.microservices.demo.practiceserver.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +32,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> getAllMembersInfo(Integer currentPage, Integer size) {
+    public Slice<Member> getAllMembersInfo(Long cursor, Integer size) {
+        Pageable pageable = PageRequest.of(0, size, Sort.by("id").ascending());
 
-        return memberRepository.findAll();
+        if (cursor.equals(0L)) {
+            return memberRepository.findAllByOrderByIdAsc(pageable);
+        } else {
+            return memberRepository.findByIdGreaterThanOrderByIdAsc(cursor, pageable);
+        }
+
     }
 
     @Override
