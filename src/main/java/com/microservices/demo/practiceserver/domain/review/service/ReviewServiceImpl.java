@@ -7,9 +7,13 @@ import com.microservices.demo.practiceserver.domain.product.repository.MemberPro
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewRequestDTO;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import com.microservices.demo.practiceserver.domain.review.repository.ReviewRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,9 +48,12 @@ public class ReviewServiceImpl implements ReviewService{
 
 
     @Override
-    public List<Review> getReviewList(){
-        return reviewRepository.findAll();
-
+    public Slice<Review> getReviews(Long cursor, Integer size){
+        Pageable pageable= PageRequest.of(0,size);
+        if(cursor==0L){
+            return reviewRepository.findAllByOrderByIdAsc(pageable);
+        }
+        return reviewRepository.findAllByIdGreaterThanOrderByIdAsc(cursor,pageable);
     }
 
     @Override

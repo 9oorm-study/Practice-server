@@ -2,6 +2,8 @@ package com.microservices.demo.practiceserver.domain.review.service;
 
 import com.microservices.demo.practiceserver.domain.review.dto.ReviewRequestDTO;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public interface ReviewService {
 
     Review createReview(ReviewRequestDTO.CreateReviewDTO request);
 
-    List<Review> getReviewList();
+    Slice<Review> getReviews(Long cursor, Integer size);
 
     Review getReview(Long reviewId);
 
