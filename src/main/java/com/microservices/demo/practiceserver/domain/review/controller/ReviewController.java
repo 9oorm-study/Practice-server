@@ -57,9 +57,13 @@ public class ReviewController {
             @RequestParam(value = "cursor",required = false,defaultValue = "0")Long cursor,
             @RequestParam(value = "size",required = false,defaultValue = "10")Integer size
     ){
+        //cursor와 size를 service 에 넘겨서 로직 처리
         Slice<Review> reviews = reviewService.getReviews(cursor,size);
+
+        //Slice<Review>내부에 List<Review>가 있는데, 우리가 실제로 보여줄 리뷰 리스트만 꺼낸다.
         List<Review>reviewList=reviews.getContent();
 
+        //Review 객체들을 보내기 편한 DTO로 변환
         List<ReviewResponseDTO.ReviewDetailResponseDTO>items=reviewList.stream()
                 .map(review -> new ReviewResponseDTO.ReviewDetailResponseDTO(
                         review.getId(),
@@ -69,7 +73,7 @@ public class ReviewController {
                         toProductDetailResponseDTO(review.getMemberProduct().getProduct())
                 ))
                 .collect(Collectors.toList());
-
+        //응답 DTO를 이렇게 구성
         ReviewResponseDTO.ReviewListResponseDTO response= ReviewResponseDTO.ReviewListResponseDTO.builder()
                 .items(items)
                 .cursor(reviews.hasNext()?reviewList.get(reviewList.size()-1).getId():null)
