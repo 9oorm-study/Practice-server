@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,17 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public void signUpMember(MemberRequestDTO.SignUpRequest request) {
+        memberRepository.save(
+                Member.builder()
+                        .username(request.getUsername())
+                        .password(request.getPassword())
+                        .build()
+        );
+    }
 
     @Override
     public Member postMemberInfo(MemberRequestDTO.PostMemberInfoRequest request) {

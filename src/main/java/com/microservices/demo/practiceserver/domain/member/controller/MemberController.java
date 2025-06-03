@@ -16,6 +16,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PostMapping("/signup")
+    public void signupMember(@RequestBody MemberRequestDTO.SignUpRequest request) {
+        memberService.signUpMember(request);
+    }
+
     @PostMapping("/members")
     public MemberResponseDTO.CreateMemberInfoResponse postMemberInfo(@RequestBody MemberRequestDTO.PostMemberInfoRequest request) {
         Member member = memberService.postMemberInfo(request);

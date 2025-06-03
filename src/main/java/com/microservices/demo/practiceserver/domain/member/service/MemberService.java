@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface MemberService {
 
+    void signUpMember(MemberRequestDTO.SignUpRequest request);
+
     Member postMemberInfo(MemberRequestDTO.PostMemberInfoRequest request);
 
     Slice<Member> getAllMembersInfo(Long cursor, Integer size);
