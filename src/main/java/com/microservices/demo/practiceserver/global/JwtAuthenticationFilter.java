@@ -3,6 +3,7 @@ package com.microservices.demo.practiceserver.global;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
@@ -14,6 +15,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader("Authorization");
 
         // 2. 토큰 추출하기
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+
+            if (JwtProvider.isTokenValid(token)) {
+                String email = JwtProvider.getUsername(token);
+            }
+        }
 
         // 3. 토큰 검증하기
 
