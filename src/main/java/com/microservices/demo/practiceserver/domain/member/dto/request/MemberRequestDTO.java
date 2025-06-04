@@ -25,5 +25,10 @@ public class MemberRequestDTO {
         private LocalDate birth;
     }
 
+    @Getter
+    public static class SignupRequest {
+        private String username;
+        private String password;
+    }
 
 }
