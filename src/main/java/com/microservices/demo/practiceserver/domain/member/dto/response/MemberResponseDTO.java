@@ -96,4 +96,17 @@ public class MemberResponseDTO {
         }
     }
 
+    @Getter
+    @Builder
+    public static class MemberLoginResponse {
+        private String accessToken;
+        private String refreshToken;
+
+        public static MemberLoginResponse toMemberLoginResponse(String accessToken, String refreshToken) {
+            return MemberLoginResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }
+    }
 }

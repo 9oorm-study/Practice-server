@@ -30,5 +30,11 @@ public class MemberRequestDTO {
         private String username;
         private String password;
     }
+    @Getter
+    public static class LoginRequest {
+        private String username;
+        private String password;
+    }
+
 
 }

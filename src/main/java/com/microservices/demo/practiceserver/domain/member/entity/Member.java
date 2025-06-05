@@ -1,6 +1,5 @@
 package com.microservices.demo.practiceserver.domain.member.entity;
 
-import ch.qos.logback.core.status.Status;
 import com.microservices.demo.practiceserver.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
